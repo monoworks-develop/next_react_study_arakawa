@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useState, ReactNode, useContext } from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 
 interface ThemeContextType {
   theme: string;
@@ -9,11 +9,27 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<string>('light');
+  // 初期状態をnullに設定
+  const [theme, setTheme] = useState<string | null>(null);
+
+  useEffect(() => {
+    // クライアントサイドでのみlocalStorageを参照
+    const storedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(storedTheme);
+  }, []);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', newTheme);
+      return newTheme;
+    });
   };
+
+  // テーマがnullの場合、まだテーマを取得中であるため何もレンダリングしない
+  if (theme === null) {
+    return null;
+  }
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
