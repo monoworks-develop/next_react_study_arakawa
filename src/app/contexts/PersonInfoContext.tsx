@@ -13,11 +13,9 @@ const initialPersonInfo: Person = {
 };
 
 // PersonInfoContextの作成
-const PersonInfoContext = createContext<Person>(initialPersonInfo);
+export const PersonInfoContext = createContext<Person>(initialPersonInfo);
 
 // コンテキストプロバイダーの作成
 export const PersonInfoProvider = ({ children }: { children: ReactNode }) => {
   return <PersonInfoContext.Provider value={initialPersonInfo}>{children}</PersonInfoContext.Provider>;
 };
-
-export default PersonInfoContext;
