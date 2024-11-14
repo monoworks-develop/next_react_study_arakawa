@@ -3,6 +3,12 @@ type SimpleButtonProps = {
   argFunction: () => void;
 };
 
+// 重い処理:ループで時間がかかる
+let i = 0;
+while (i < 999999999) {
+  i++;
+}
+
 export const SimpleButton = ({ children, argFunction }: SimpleButtonProps) => {
   return (
     <div className="flex justify-center items-center">

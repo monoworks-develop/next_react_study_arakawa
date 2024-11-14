@@ -1,5 +1,5 @@
 'use client';
-import { FormEvent, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { FormEvent, useCallback, useContext, useEffect, useId, useMemo, useReducer, useRef, useState } from 'react';
 import { PersonInfoContext } from '../contexts/PersonInfoContext';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import { SimpleButton } from '@/components/SimpleButton';
@@ -63,7 +63,7 @@ export default function Hooks() {
   const [count2, setCount2] = useState<number>(0);
 
   const square = useMemo(() => {
-    // 重い処理の例:ループで時間がかかる
+    // 重い処理:ループで時間がかかる
     let i = 0;
     while (i < 999999999) {
       i++;
@@ -71,6 +71,21 @@ export default function Hooks() {
     console.log('square');
     return count2 * count2;
   }, [count2]);
+
+  // useId
+  const generatedId = useId();
+
+  const [count3, setCount3] = useState<number>(0);
+  const [count4, setCount4] = useState<number>(0);
+  // useCallbackでincrement関数をメモ化
+  const increment = useCallback(() => {
+    setCount3((prev) => prev + 1);
+  }, []); // 依存配列が空なので、同じ関数を再利用
+
+  // useCallbackを使わない例（比較のため）
+  const incrementWithoutCallback = () => {
+    setCount4((prev) => prev + 1);
+  };
 
   return (
     <ThemeProvider>
@@ -150,8 +165,27 @@ export default function Hooks() {
         </div>
         <hr className="w-full border-gray-300" />
         <div className="flex flex-col items-center justify-center p-10 bg-white shadow-xl rounded-lg transform transition duration-500 hover:scale-105">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">UseId</h1>
+          <span className="text-black">{generatedId}</span>
+        </div>
+        <hr className="w-full border-gray-300" />
+        <div className="flex flex-col items-center justify-center p-10 bg-white shadow-xl rounded-lg transform transition duration-500 hover:scale-105">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-6">UseCallback Example</h1>
+
+          {/* useCallbackを使ったボタン */}
+          <h2 className="text-3xl font-bold text-black mb-4">Count with useCallback: {count3}</h2>
+          <SimpleButton argFunction={increment}>Increment Count3 (useCallback)</SimpleButton>
+
+          <hr className="w-full border-gray-300 my-8" />
+
+          {/* useCallbackを使わないボタン */}
+          <h2 className="text-3xl font-bold text-black mb-4">Count without useCallback: {count4}</h2>
+          <SimpleButton argFunction={incrementWithoutCallback}>Increment Count4 (without useCallback)</SimpleButton>
+        </div>
+        <hr className="w-full border-gray-300" />
+        <div className="flex flex-col items-center justify-center p-10 bg-white shadow-xl rounded-lg transform transition duration-500 hover:scale-105">
           <h1 className="text-5xl font-extrabold text-gray-900 mb-6">Import Component</h1>
-          <SimpleButton argFunction={() => console.log('SimpleButtonを押下しました!')}>{buttonTitle}</SimpleButton>
+          <SimpleButton argFunction={() => alert('SimpleButtonを押下しました!')}>{buttonTitle}</SimpleButton>
         </div>
       </main>
     </ThemeProvider>

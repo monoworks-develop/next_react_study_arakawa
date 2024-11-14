@@ -3,6 +3,7 @@
 import React from 'react';
 import { useTheme } from './contexts/ThemeContext';
 import classNames from 'classnames';
+import Link from 'next/link';
 
 const ThemeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { theme, toggleTheme } = useTheme();
@@ -22,14 +23,14 @@ const ThemeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </h1>
           <ul className="flex space-x-8 text-lg items-center">
             <li>
-              <a href="/" className="hover:text-yellow-300 transition-colors duration-300">
+              <Link href="/" className="hover:text-yellow-300 transition-colors duration-300">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/hooks" className="hover:text-yellow-300 transition-colors duration-300">
+              <Link href="/hooks" className="hover:text-yellow-300 transition-colors duration-300">
                 React Hooks
-              </a>
+              </Link>
             </li>
             <li>
               <button
