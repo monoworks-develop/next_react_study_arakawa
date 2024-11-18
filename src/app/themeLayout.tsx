@@ -33,6 +33,11 @@ const ThemeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               </Link>
             </li>
             <li>
+              <Link href="/redux" className="hover:text-yellow-300 transition-colors duration-300">
+                Redux
+              </Link>
+            </li>
+            <li>
               <button
                 onClick={toggleTheme}
                 className="ml-4 px-4 py-2 rounded-full bg-indigo-500 text-white hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
