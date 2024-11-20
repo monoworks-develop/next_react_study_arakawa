@@ -3,10 +3,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { increment, decrement, incrementByAmount } from '../features/counter/counterSlice';
+import { useState } from 'react';
 
 export default function Counter() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
+  const [incrementAmount, setIncrementAmount] = useState<number>(0);
 
   return (
     <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-md">
@@ -19,11 +21,17 @@ export default function Counter() {
           Decrement
         </button>
         <button
-          onClick={() => dispatch(incrementByAmount(5))}
+          onClick={() => dispatch(incrementByAmount(Number(incrementAmount)))}
           className="px-6 py-2 bg-green-600 text-white rounded-full hover:bg-green-500"
         >
-          Increment by 5
+          Increment by amount
         </button>
+        <input
+          className="px-2 py-1 border border-gray-300 rounded-md"
+          aria-label="Set increment amount"
+          onChange={(e) => setIncrementAmount(Number(e.target.value))}
+          type='number'
+        />
       </div>
     </div>
   );

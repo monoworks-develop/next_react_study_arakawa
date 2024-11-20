@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
-import { useTheme } from './contexts/ThemeContext';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
+import { ThemeLI } from '@/components/ThemeLI';
 
 const ThemeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { theme, toggleTheme } = useTheme();
+  const theme = useSelector((state: RootState) => state.theme.mode);
 
   // TailwindCSSのクラスをテーマに応じて切り替える
   const themeClasses = classNames('transition-all duration-500 ease-in-out min-h-screen flex flex-col', {
@@ -37,14 +39,7 @@ const ThemeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 Redux
               </Link>
             </li>
-            <li>
-              <button
-                onClick={toggleTheme}
-                className="ml-4 px-4 py-2 rounded-full bg-indigo-500 text-white hover:bg-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-              >
-                {theme === 'light' ? 'Dark Theme' : 'Light Theme'}
-              </button>
-            </li>
+            <ThemeLI />
           </ul>
         </nav>
       </header>
