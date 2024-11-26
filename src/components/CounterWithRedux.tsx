@@ -5,7 +5,7 @@ import { RootState } from '../app/store';
 import { increment, decrement, incrementByAmount } from '../features/counter/counterSlice';
 import { useState } from 'react';
 
-export default function Counter() {
+export default function CounterWithRedux() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState<number>(0);
@@ -29,8 +29,13 @@ export default function Counter() {
         <input
           className="px-2 py-1 border border-gray-300 rounded-md"
           aria-label="Set increment amount"
-          onChange={(e) => setIncrementAmount(Number(e.target.value))}
-          type='number'
+          onChange={(e) => {
+            const value = Number(e.target.value);
+            if (!isNaN(value)) {
+              setIncrementAmount(value);
+            }
+          }}
+          type="number"
         />
       </div>
     </div>

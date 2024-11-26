@@ -39,6 +39,11 @@ const ThemeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 Redux
               </Link>
             </li>
+            <li>
+              <Link href="/zustand" className="hover:text-yellow-300 transition-colors duration-300">
+                Zustand
+              </Link>
+            </li>
             <ThemeLI />
           </ul>
         </nav>
